@@ -97,11 +97,15 @@ public class App {
         dorms.put(name, dorm);
     }
     private static void addStudent(String id, String name, String entranceYear, String gender) {
-        Student student = new Student(id, name, entranceYear, gender);
-        entityManager.getTransaction().begin();
-        entityManager.persist(student);
-        entityManager.getTransaction().commit();
-        students.put(id, student);
+        if (!students.containsKey(id)) {
+            Student student = new Student(id, name, entranceYear, gender);
+            entityManager.getTransaction().begin();
+            entityManager.persist(student);
+            entityManager.getTransaction().commit();
+            students.put(id, student);
+        } else {
+            // System.out.println("Student with ID " + id + " already exists.");
+        }
     }
     private static void assignStudentToDorm(String studentId, String dormName) {
         Student student = students.get(studentId);
