@@ -126,8 +126,10 @@ public class App {
         entityManager.getTransaction().begin();
         List<Student> students = entityManager.createQuery("SELECT s FROM Student s", Student.class).getResultList();
         for (Student student : students) {
-            student.getDorm().getStudents().remove(student);
-            entityManager.merge(student);
+            if (student.getDorm() != null && student.getDorm().getStudents() != null) {
+                student.getDorm().getStudents().remove(student);
+                entityManager.merge(student);
+            }
         }
         entityManager.createQuery(jpql).executeUpdate();
         entityManager.flush();
@@ -138,8 +140,10 @@ public class App {
         entityManager.getTransaction().begin();
         List<Dorm> dorms = entityManager.createQuery("SELECT d FROM Dorm d", Dorm.class).getResultList();
         for (Dorm dorm : dorms) {
-            dorm.getStudents().clear();
-            entityManager.merge(dorm);
+            if (dorm.getStudents() != null) {
+                dorm.getStudents().clear();
+                entityManager.merge(dorm);
+            }
         }
         entityManager.createQuery(jpql).executeUpdate();
         entityManager.flush();
