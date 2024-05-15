@@ -1,43 +1,55 @@
 package pbo.f01.model;
-
-import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.*;
 @Entity
-public class Student implements Serializable {
+@Table(name = "student")
+public class Student {
     @Id
-    private String id;
-    private String name;
-    private int entranceYear;
-    private String gender;
+    @Column(name = "id",nullable = false,length = 25)
+   private String id;
+    @Column(name = "name",nullable = false,length = 50)
+   private String name;
+    @Column(name = "yearstudent",nullable = false,length = 25)
+   private String yearstudent;
+   @Column(name="gender",nullable = false,length = 25)
+   private String gender;
+   @ManyToOne
+    @JoinColumn(name = "dorm_id")
     private Dorm dorm;
-
-    public Student(String id, String name, int entranceYear, String gender) {
-        this.id = id;
-        this.name = name;
-        this. entranceYear = entranceYear;
-        this.gender = gender;
-        
+   public Student(String id, String name, String yearstudent,String gender){
+    this.id = id;
+    this.name=name;
+    this.yearstudent= yearstudent;
+    this.gender=gender;
+   }
+   public Student(){
+   }
+   public String getId(){
+       return id;
+   }
+    public void setId(String id){
+         this.id=id;
     }
-     public String getid() {
-        return id;
-    }
-    public String getname() {
+    public String getName(){
         return name;
     }
-    public int getYear() {
-        return entranceYear;
+    public void setName(String name){
+        this.name=name;
     }
-
-    public String getgender() {
+    public String getyearstudent(){
+        return yearstudent;
+    }
+    public void setYear(String yearstudent){
+        this.yearstudent=yearstudent;
+    }
+    public String getGender(){
         return gender;
     }
-
-    public Dorm getdorm() {
-        return dorm;
+    public void setGender(String gender){
+        this.gender=gender;
     }
-    public void setDorm(Dorm dorm) {
-        this.dorm = dorm;
+    public Dorm getDorm() {
+        return this.dorm;
     }
 }
+
+ 

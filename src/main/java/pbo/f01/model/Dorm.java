@@ -1,37 +1,50 @@
 package pbo.f01.model;
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
+import java.util.*;
 @Entity
-public class Dorm implements Serializable  {
+@Table(name = "dorm")
+public class Dorm {
+    @Id
+    @Column(name = "name",nullable = false,length = 50)
     private String name;
+    @Column(name = "capacity",nullable = false,length = 25)
     private int capacity;
-    private  String gender;
-    private List<Student> students;
-   
-    public Dorm(String name, int capacity, String gende) {
-        this.name = name;
-        this.capacity = capacity;
-        this.gender = gender;
-        
+    @Column(name = "gender",nullable = false,length = 25)
+    private String gender;
+    @OneToMany(mappedBy = "dorm", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Student> students = new ArrayList<>();
+    public Dorm( String name,int capacity,String gender){
+        this.name=name;
+        this.capacity=capacity;
+        this.gender=gender;
     }
-    
-    public String getname() {
-        return name;
-    }
+    public Dorm(){
 
-    public int getcapacity() {
-        return capacity;
     }
-
-    public String getgender() {
-        return gender;
-    }
-    public List<Student> getStudents(){
-        return students;
-    }
-    public void setStudents(List<Student> students){
-        this.students=students;
-    }
+public String getName() {
+    return name;
 }
 
+public void setName(String name) {
+    this.name = name;
+}
+
+public int getCapacity() {
+    return capacity;
+}
+
+public void setCapacity(int capacity) {
+    this.capacity = capacity;
+}
+
+public String getGender() {
+    return gender;
+}
+
+public void setGender(String gender) {
+    this.gender = gender;
+}
+public List<Student> getStudents() {
+    return students;
+}
+}
